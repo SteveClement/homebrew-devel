@@ -48,7 +48,7 @@ class MuttPatched < Formula
   depends_on 'gpgme' => :optional
 
   patch do
-    url "http://patch-tracker.debian.org/patch/series/dl/mutt/1.5.21-6.2+deb7u1/features/trash-folder"
+    url "http://localhost.lu/mutt/patches/trash-folder"
     sha1 "6c8ce66021d89a063e67975a3730215c20cf2859"
   end if build.with? "trash-patch"
 
@@ -65,12 +65,12 @@ class MuttPatched < Formula
   end if build.with? "pgp-verbose-mime-patch"
 
   patch do
-    url "http://localhost.lu/mutt/patches/patch-1.5.22.sc.multiple-crypt-hook.1"
+    url "http://localhost.lu/mutt/patches/patch-1.5.23.sc.multiple-crypt-hook.1"
     sha1 "697aae4e643f1e8f50c27b894ee6bfaab38d3119"
   end if build.with? "pgp-multiple-crypt-hook-patch"
 
   patch do
-    url "http://localhost.lu/mutt/patches/patch-1.5.22.sc.crypt-combined.1"
+    url "http://localhost.lu/mutt/patches/patch-1.5.23.sc.crypt-combined.1"
     sha1 "2a12fe0a071e8cf7fe6f29336c6dadbccf95cdea"
   end if build.with? "pgp-combined-crypt-hook-patch"
 
