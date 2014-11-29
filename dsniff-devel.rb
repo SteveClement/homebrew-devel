@@ -1,10 +1,10 @@
 require 'formula'
 
-"
+=begin
 Undefined symbols for architecture x86_64:
   "_g_thread_create_full", referenced from:
       _nids_dispatch in libnids.a(libnids.o)
-"
+=end
 
 class DsniffDevel < Formula
   url 'http://monkey.org/~dugsong/dsniff/beta/dsniff-2.4b1.tar.gz'
