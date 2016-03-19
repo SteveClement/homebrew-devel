@@ -49,7 +49,7 @@ class MuttPatched < Formula
 
   patch do
     url "http://localhost.lu/mutt/patches/trash-folder"
-    sha1 "94dc6b85bdcc3cffa03512c9323a7431423cb722"
+    sha1 "159d8f016275d239fd2fc847a0d243fb46e6cf2c"
   end if build.with? "trash-patch"
 
   # original source for this went missing, patch sourced from Arch at
