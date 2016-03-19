@@ -2,9 +2,9 @@ require 'formula'
 
 class MuttPatched < Formula
   homepage 'http://www.mutt.org/'
-  url 'ftp://ftp.mutt.org/pub/mutt/mutt-1.5.23.tar.gz'
-  mirror 'http://fossies.org/linux/misc/mutt-1.5.23.tar.gz'
-  sha1 '8ac821d8b1e25504a31bf5fda9c08d93a4acc862'
+  url 'ftp://ftp.mutt.org/pub/mutt/mutt-1.5.24.tar.gz'
+  mirror 'http://fossies.org/linux/misc/mutt-1.5.24.tar.gz'
+  sha1 '38a2da5eb01ff83a90a2caee28fa2e95dbfe6898'
   revision 1
 
   bottle do
