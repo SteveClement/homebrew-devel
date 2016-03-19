@@ -81,7 +81,7 @@ class MuttPatched < Formula
 
   patch do
     url "https://raw.githubusercontent.com/SteveClement/mutt-sidebar-patch/master/mutt-sidebar.patch"
-    sha1 "1e0e44d6503fe28985d4f65080f580bc2c312af0"
+    sha1 "8bde2e1baf68a3239a248407c0cc3566f6d21174"
   end if build.with? "sidebar-patch"
 
   def install
