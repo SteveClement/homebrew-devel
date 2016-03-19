@@ -1,4 +1,12 @@
-require 'formula'
+# Note: Mutt has a large number of non-upstream patches available for
+# it, some of which conflict with each other. These patches are also
+# not kept up-to-date when new versions of mutt (occasionally) come
+# out.
+#
+# To reduce Homebrew's maintenance burden, new patches are not being
+# accepted for this formula. We would be very happy to see members of
+# the mutt community maintain a more comprehesive tap with better
+# support for patches.
 
 class MuttPatched < Formula
   desc "Mongrel of mail user agents (part elm, pine, mush, mh, etc.)"
@@ -31,70 +39,85 @@ class MuttPatched < Formula
     :because => 'both install mmdf.5 and mbox.5 man pages'
 
   option "with-debug", "Build with debug option enabled"
-  option "with-sidebar-patch", "Build with sidebar patch"
-  option "with-trash-patch", "Apply trash folder patch"
   option "with-s-lang", "Build against slang instead of ncurses"
   option "with-ignore-thread-patch", "Apply ignore-thread patch"
-  option "with-pgp-verbose-mime-patch", "Apply PGP verbose mime patch"
   option "with-confirm-attachment-patch", "Apply confirm attachment patch"
+  option "with-sidebar-patch", "Build with sidebar patch"
+  option "with-trash-patch", "Apply trash folder patch"
+  option "with-pgp-verbose-mime-patch", "Apply PGP verbose mime patch"
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
 
   depends_on 'openssl'
   depends_on 'tokyo-cabinet'
-  depends_on 's-lang' => :optional
-  depends_on 'gpgme' => :optional
   depends_on "gettext" => :optional
+  depends_on 'gpgme' => :optional
   depends_on "libidn" => :optional
-
-  patch do
-    url "http://localhost.lu/mutt/patches/trash-folder"
-    sha1 "159d8f016275d239fd2fc847a0d243fb46e6cf2c"
-  end if build.with? "trash-patch"
+  depends_on 's-lang' => :optional
 
   # original source for this went missing, patch sourced from Arch at
   # https://aur.archlinux.org/packages/mutt-ignore-thread/
-  patch do
-    url "https://gist.githubusercontent.com/mistydemeo/5522742/raw/1439cc157ab673dc8061784829eea267cd736624/ignore-thread-1.5.21.patch"
-    sha256 "7290e2a5ac12cbf89d615efa38c1ada3b454cb642ecaf520c26e47e7a1c926be"
-  end if build.with? "ignore-thread-patch"
+  if build.with? "ignore-thread-patch"
+    patch do
+      url "https://gist.githubusercontent.com/mistydemeo/5522742/raw/1439cc157ab673dc8061784829eea267cd736624/ignore-thread-1.5.21.patch"
+      sha256 "7290e2a5ac12cbf89d615efa38c1ada3b454cb642ecaf520c26e47e7a1c926be"
+    end
+  end
 
-  patch do
-    url "https://raw.githubusercontent.com/skn/homebrew/master/mutt/patches/patch-1.5.4.vk.pgp_verbose_mime"
-    sha256 "bb9108955aa8e1ddeb6a28ef60aa12713bc5c497e07f0544f556c6e6ad225280"
-  end if build.with? "pgp-verbose-mime-patch"
+  if build.with? "confirm-attachment-patch"
+    patch do
+      url "https://gist.githubusercontent.com/tlvince/5741641/raw/c926ca307dc97727c2bd88a84dcb0d7ac3bb4bf5/mutt-attach.patch"
+      sha256 "da2c9e54a5426019b84837faef18cc51e174108f07dc7ec15968ca732880cb14"
+    end
+  end
 
-  patch do
-    url "https://gist.githubusercontent.com/tlvince/5741641/raw/c926ca307dc97727c2bd88a84dcb0d7ac3bb4bf5/mutt-attach.patch"
-    sha256 "da2c9e54a5426019b84837faef18cc51e174108f07dc7ec15968ca732880cb14"
-  end if build.with? "confirm-attachment-patch"
+  if build.with? "sidebar-patch"
+    patch do
+      url "https://raw.githubusercontent.com/SteveClement/mutt-sidebar-patch/master/mutt-sidebar.patch"
+      sha256 "ff92ef50811bc77ee1b7657aef6d2b5f48fae9e6d6dc0fd1dcd0296f983c21f4"
+    end
+  end
 
-  patch do
-    url "https://raw.githubusercontent.com/SteveClement/mutt-sidebar-patch/master/mutt-sidebar.patch"
-    sha256 "ff92ef50811bc77ee1b7657aef6d2b5f48fae9e6d6dc0fd1dcd0296f983c21f4"
-  end if build.with? "sidebar-patch"
+  if build.with? "trash-patch"
+    patch do
+      url "http://localhost.lu/mutt/patches/trash-folder"
+      sha256 "9e7484ebed013b575150a8edc20821594d514b45703931b99f1e4a7e87c4de64"
+    end
+  end
+
+  if build.with? "pgp-verbose-mime-patch"
+    patch do
+      url "https://raw.githubusercontent.com/skn/homebrew/master/mutt/patches/patch-1.5.4.vk.pgp_verbose_mime"
+      sha256 "bb9108955aa8e1ddeb6a28ef60aa12713bc5c497e07f0544f556c6e6ad225280"
+    end
+  end
 
   def install
     user_admin = Etc.getgrnam("admin").mem.include?(ENV["USER"])
 
-    args = ["--disable-dependency-tracking",
-            "--disable-warnings",
-            "--prefix=#{prefix}",
-            "--with-ssl=#{Formula['openssl'].opt_prefix}",
-            "--with-sasl",
-            "--with-gss",
-            "--enable-imap",
-            "--enable-smtp",
-            "--enable-pop",
-            "--enable-hcache",
-            "--with-tokyocabinet",
-            # This is just a trick to keep 'make install' from trying to chgrp
-            # the mutt_dotlock file (which we can't do if we're running as an
-            # unpriviledged user)
-            "--with-homespool=.mbox"]
-    args << "--with-slang" if build.with? 's-lang'
+    args = %W[
+      --disable-dependency-tracking
+      --disable-warnings
+      --prefix=#{prefix}
+      --with-ssl=#{Formula["openssl"].opt_prefix}
+      --with-sasl
+      --with-gss
+      --enable-imap
+      --enable-smtp
+      --enable-pop
+      --enable-hcache
+      --with-tokyocabinet
+    ]
+
+    # This is just a trick to keep 'make install' from trying
+    # to chgrp the mutt_dotlock file (which we can't do if
+    # we're running as an unprivileged user)
+    args << "--with-homespool=.mbox" unless user_admin
+
+    args << "--disable-nls" if build.without? "gettext"
     args << "--enable-gpgme" if build.with? 'gpgme'
+    args << "--with-slang" if build.with? 's-lang'
 
     if build.with? 'debug'
       args << "--enable-debug"
@@ -102,14 +125,21 @@ class MuttPatched < Formula
       args << "--disable-debug"
     end
 
-    if build.head?
-      system "./prepare", *args
-    else
-      system "./configure", *args
-    end
+    system "./prepare", *args
     system "make"
-    system "make", "install"
 
-    (share/'doc/mutt').install resource('html') if build.head?
+    # This permits the `mutt_dotlock` file to be installed under a group
+    # that isn't `mail`.
+    # https://github.com/Homebrew/homebrew/issues/45400
+    if user_admin
+      inreplace "Makefile", /^DOTLOCK_GROUP =.*$/, "DOTLOCK_GROUP = admin"
+    end
+
+    system "make", "install"
+    doc.install resource("html") if build.head?
+  end
+
+  test do
+    system bin/"mutt", "-D"
   end
 end
