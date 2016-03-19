@@ -80,8 +80,8 @@ class MuttPatched < Formula
   end if build.with? "confirm-attachment-patch"
 
   patch do
-    url "https://raw.github.com/nedos/mutt-sidebar-patch/master/mutt-sidebar.patch"
-    sha1 "1e151d4ff3ce83d635cf794acf0c781e1b748ff1"
+    url "https://raw.githubusercontent.com/SteveClement/mutt-sidebar-patch/master/mutt-sidebar.patch"
+    sha1 "1e0e44d6503fe28985d4f65080f580bc2c312af0"
   end if build.with? "sidebar-patch"
 
   def install
