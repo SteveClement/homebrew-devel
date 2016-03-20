@@ -88,8 +88,8 @@ class MuttPatched < Formula
 
   if build.with? "pgp-verbose-mime-patch"
     patch do
-      url "https://raw.githubusercontent.com/skn/homebrew/master/mutt/patches/patch-1.5.4.vk.pgp_verbose_mime"
-      sha256 "bb9108955aa8e1ddeb6a28ef60aa12713bc5c497e07f0544f556c6e6ad225280"
+      url "http://localhost.lu/mutt/patches/patch-1.5.24.sc.pgp_verbose_mime"
+      sha256 "681f304b8be1f2f2af9559133bb94b27130287ab3d5de10c30d6ffe3d45fbb80"
     end
   end
 
