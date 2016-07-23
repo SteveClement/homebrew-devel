@@ -1,4 +1,4 @@
-# Note: Mutt has a large number of non-upstream patches available for
+/si# Note: Mutt has a large number of non-upstream patches available for
 # it, some of which conflict with each other. These patches are also
 # not kept up-to-date when new versions of mutt (occasionally) come
 # out.
@@ -28,11 +28,6 @@ class MuttPatched < Formula
     resource 'html' do
       url 'http://dev.mutt.org/doc/manual.html', :using => :nounzip
     end
-  end
-
-  unless Tab.for_name("signing-party").with? "rename-pgpring"
-    conflicts_with "signing-party",
-      :because => "mutt installs a private copy of pgpring"
   end
 
   conflicts_with 'tin',
