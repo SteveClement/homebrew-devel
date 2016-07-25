@@ -69,7 +69,7 @@ class MuttPatched < Formula
   if build.with? "sidebar-patch"
     patch do
       url "https://raw.githubusercontent.com/SteveClement/mutt-sidebar-patch/master/mutt-sidebar.patch"
-      sha256 "ff92ef50811bc77ee1b7657aef6d2b5f48fae9e6d6dc0fd1dcd0296f983c21f4"
+      sha256 "11d0705e4dad8b0e4b6b869a356c28bf0cee9b70e63e8cea60e411d8e9669542"
     end
   end
 
