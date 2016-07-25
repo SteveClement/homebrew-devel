@@ -75,14 +75,14 @@ class MuttPatched < Formula
 
   if build.with? "trash-patch"
     patch do
-      url "http://localhost.lu/mutt/patches/trash-folder"
-      sha256 "9e7484ebed013b575150a8edc20821594d514b45703931b99f1e4a7e87c4de64"
+      url "https://localhost.lu/mutt/patches/trash-folder"
+      sha256 "a36000087156d23b4f3d333a1d6931fda3457deac3403b6e59f0e2389f16bdf4"
     end
   end
 
   if build.with? "pgp-verbose-mime-patch"
     patch do
-      url "http://localhost.lu/mutt/patches/patch-1.5.24.sc.pgp_verbose_mime"
+      url "https://localhost.lu/mutt/patches/patch-1.5.24.sc.pgp_verbose_mime"
       sha256 "681f304b8be1f2f2af9559133bb94b27130287ab3d5de10c30d6ffe3d45fbb80"
     end
   end
