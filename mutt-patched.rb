@@ -10,33 +10,32 @@
 
 class MuttPatched < Formula
   desc "Mongrel of mail user agents (part elm, pine, mush, mh, etc.)"
-  homepage 'http://www.mutt.org/'
+  homepage "http://www.mutt.org/"
   url "https://bitbucket.org/mutt/mutt/downloads/mutt-1.5.24.tar.gz"
   mirror "ftp://ftp.mutt.org/pub/mutt/mutt-1.5.24.tar.gz"
   sha256 "a292ca765ed7b19db4ac495938a3ef808a16193b7d623d65562bb8feb2b42200"
 
   bottle do
-    revision 2
     sha256 "5bb0c9590b522bbcc38bfecaf0561810db2660792f472aa12a3b6c8f5e5b28d7" => :el_capitan
     sha256 "8cad91b87b615984871b6bed35a029edcef006666bc7cf3b8f6b8b74d91c5b97" => :yosemite
     sha256 "c57d868588eb947002902c90ee68af78298cbb09987e0150c1eea73f9e574cce" => :mavericks
   end
 
   head do
-    url 'http://dev.mutt.org/hg/mutt#default', :using => :hg
+    url "https://dev.mutt.org/hg/mutt#default", :using => :hg
 
-    resource 'html' do
-      url 'http://dev.mutt.org/doc/manual.html', :using => :nounzip
+    resource "html" do
+      url "https://dev.mutt.org/doc/manual.html", :using => :nounzip
     end
   end
 
-  conflicts_with 'tin',
-    :because => 'both install mmdf.5 and mbox.5 man pages'
+  conflicts_with "tin",
+    :because => "both install mmdf.5 and mbox.5 man pages"
 
   option "with-debug", "Build with debug option enabled"
   option "with-s-lang", "Build against slang instead of ncurses"
-  option "with-ignore-thread-patch", "Apply ignore-thread patch"
   option "with-confirm-attachment-patch", "Apply confirm attachment patch"
+  option "with-ignore-thread-patch", "Apply ignore-thread patch"
   option "with-sidebar-patch", "Build with sidebar patch"
   option "with-trash-patch", "Apply trash folder patch"
   option "with-pgp-verbose-mime-patch", "Apply PGP verbose mime patch"
@@ -44,12 +43,12 @@ class MuttPatched < Formula
   depends_on "autoconf" => :build
   depends_on "automake" => :build
 
-  depends_on 'openssl'
-  depends_on 'tokyo-cabinet'
+  depends_on "openssl"
+  depends_on "tokyo-cabinet"
   depends_on "gettext" => :optional
-  depends_on 'gpgme' => :optional
+  depends_on "gpgme" => :optional
   depends_on "libidn" => :optional
-  depends_on 's-lang' => :optional
+  depends_on "s-lang" => :optional
 
   # original source for this went missing, patch sourced from Arch at
   # https://aur.archlinux.org/packages/mutt-ignore-thread/
