@@ -35,7 +35,7 @@ class MuttPatched < Formula
   option "with-debug", "Build with debug option enabled"
   option "with-s-lang", "Build against slang instead of ncurses"
   option "with-confirm-attachment-patch", "Apply confirm attachment patch"
-  option "with-ignore-thread-patch", "Apply ignore-thread patch"
+  option "with-ignore-thread-patch", "Apply ignore-thread patch (Broken on 1.6.2)"
   option "with-sidebar-patch", "Build with sidebar patch"
   option "with-trash-patch", "Apply trash folder patch"
   option "with-pgp-verbose-mime-patch", "Apply PGP verbose mime patch"
@@ -82,7 +82,7 @@ class MuttPatched < Formula
 
   if build.with? "pgp-verbose-mime-patch"
     patch do
-      url "https://localhost.lu/mutt/patches/patch-1.5.24.sc.pgp_verbose_mime"
+      url "https://localhost.lu/mutt/patches/patch-1.6.2.sc.pgp_verbose_mime"
       sha256 "681f304b8be1f2f2af9559133bb94b27130287ab3d5de10c30d6ffe3d45fbb80"
     end
   end
