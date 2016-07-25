@@ -35,7 +35,7 @@ class MuttPatched < Formula
   option "with-debug", "Build with debug option enabled"
   option "with-s-lang", "Build against slang instead of ncurses"
   option "with-confirm-attachment-patch", "Apply confirm attachment patch"
-  option "with-ignore-thread-patch", "Apply ignore-thread patch (Broken on 1.6.2)"
+  option "with-ignore-thread-patch", "Apply ignore-thread patch"
   option "with-sidebar-patch", "Build with sidebar patch"
   option "with-trash-patch", "Apply trash folder patch"
   option "with-pgp-verbose-mime-patch", "Apply PGP verbose mime patch"
@@ -54,8 +54,8 @@ class MuttPatched < Formula
   # https://aur.archlinux.org/packages/mutt-ignore-thread/
   if build.with? "ignore-thread-patch"
     patch do
-      url "https://gist.githubusercontent.com/mistydemeo/5522742/raw/1439cc157ab673dc8061784829eea267cd736624/ignore-thread-1.5.21.patch"
-      sha256 "7290e2a5ac12cbf89d615efa38c1ada3b454cb642ecaf520c26e47e7a1c926be"
+      url "https://gist.githubusercontent.com/SteveClement/6c6bcf9c7c2f09174e790033e2feef7f/raw/7de5336930c7411e29ac4f6052de1e8c8fff909b/ignore-thread-1.6.2.patch"
+      sha256 "4bc1197c0005a55c0b8fd5baba193d1f1359bd3d903a46aa738dc2692b619d50"
     end
   end
 
