@@ -3,22 +3,21 @@
 # not kept up-to-date when new versions of mutt (occasionally) come
 # out.
 #
-# To reduce Homebrew's maintenance burden, new patches are not being
-# accepted for this formula. We would be very happy to see members of
-# the mutt community maintain a more comprehesive tap with better
-# support for patches.
+# To reduce Homebrew's maintenance burden, patches are not accepted
+# for this formula. The NeoMutt project has a Homebrew tap for their
+# patched version of Mutt: https://github.com/neomutt/homebrew-neomutt
 
 class MuttPatched < Formula
   desc "Mongrel of mail user agents (part elm, pine, mush, mh, etc.)"
   homepage "http://www.mutt.org/"
-  url "https://bitbucket.org/mutt/mutt/downloads/mutt-1.6.2.tar.gz"
-  mirror "ftp://ftp.mutt.org/pub/mutt/mutt-1.6.2.tar.gz"
-  sha256 "c5d02ef06486cdf04f9eeb9e9d7994890d8dfa7f47e7bfeb53a2a67da2ac1d8e"
+  url "https://bitbucket.org/mutt/mutt/downloads/mutt-1.7.2.tar.gz"
+  mirror "ftp://ftp.mutt.org/pub/mutt/mutt-1.7.2.tar.gz"
+  sha256 "1553501687cd22d5b8aaee4dc5a7d9dcf6cc61d7956f6aabaadd252d10cd5ff9"
 
   bottle do
-    sha256 "26f5169d2dbfe81a21d06e0a751e7a0b0293ace894235bee289a5c99fd319694" => :el_capitan
-    sha256 "29a1692e539dab777c7c5003b479a672f122bde2420490c3f236a0378c3588ae" => :yosemite
-    sha256 "aa498c0734508168c485f89915ecbf9aa6d38c47790558e1110c009c9ad73e85" => :mavericks
+    sha256 "1657ad34c085ac8db3ce49f415423ca57d479417e3f6128064dc85a68a18248f" => :sierra
+    sha256 "b91545069060c8971aae46bd6add177e8a257d5865e895f7f3ef3d59dc2a6e4c" => :el_capitan
+    sha256 "eef88ff9b9cf11901d39198d732d315b127addb37ef1d6ffe8fe88473f4752bf" => :yosemite
   end
 
   head do
@@ -29,26 +28,23 @@ class MuttPatched < Formula
     end
   end
 
-  conflicts_with "tin",
-    :because => "both install mmdf.5 and mbox.5 man pages"
-
   option "with-debug", "Build with debug option enabled"
   option "with-s-lang", "Build against slang instead of ncurses"
   option "with-confirm-attachment-patch", "Apply confirm attachment patch"
   option "with-ignore-thread-patch", "Apply ignore-thread patch"
-  option "with-sidebar-patch", "Build with sidebar patch"
-  option "with-trash-patch", "Apply trash folder patch"
   option "with-pgp-verbose-mime-patch", "Apply PGP verbose mime patch"
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
-
   depends_on "openssl"
   depends_on "tokyo-cabinet"
   depends_on "gettext" => :optional
   depends_on "gpgme" => :optional
   depends_on "libidn" => :optional
   depends_on "s-lang" => :optional
+
+  conflicts_with "tin",
+    :because => "both install mmdf.5 and mbox.5 man pages"
 
   # original source for this went missing, patch sourced from Arch at
   # https://aur.archlinux.org/packages/mutt-ignore-thread/
@@ -63,20 +59,6 @@ class MuttPatched < Formula
     patch do
       url "https://gist.githubusercontent.com/tlvince/5741641/raw/c926ca307dc97727c2bd88a84dcb0d7ac3bb4bf5/mutt-attach.patch"
       sha256 "da2c9e54a5426019b84837faef18cc51e174108f07dc7ec15968ca732880cb14"
-    end
-  end
-
-  if build.with? "sidebar-patch"
-    patch do
-      url "https://raw.githubusercontent.com/SteveClement/mutt-sidebar-patch/master/mutt-sidebar.patch"
-      sha256 "11d0705e4dad8b0e4b6b869a356c28bf0cee9b70e63e8cea60e411d8e9669542"
-    end
-  end
-
-  if build.with? "trash-patch"
-    patch do
-      url "https://localhost.lu/mutt/patches/trash-folder"
-      sha256 "a36000087156d23b4f3d333a1d6931fda3457deac3403b6e59f0e2389f16bdf4"
     end
   end
 
@@ -102,6 +84,7 @@ class MuttPatched < Formula
       --enable-pop
       --enable-hcache
       --with-tokyocabinet
+      --enable-sidebar
     ]
 
     # This is just a trick to keep 'make install' from trying
@@ -113,7 +96,7 @@ class MuttPatched < Formula
     args << "--enable-gpgme" if build.with? 'gpgme'
     args << "--with-slang" if build.with? 's-lang'
 
-    if build.with? 'debug'
+    if build.with? "debug"
       args << "--enable-debug"
     else
       args << "--disable-debug"
